@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/sql")
@@ -37,8 +40,15 @@ public class StudentController {
     }
 
     @GetMapping("/fullJoin")
-    public List<FullJoinStudentCourseDto> findAllFullJoin(){
-        return studentRepo.getFullJoinStudentCourseData();
+    public List<StudentCourseDto> findAllFullJoin(){
+        List<StudentCourseDto>list1=studentRepo.getFullJoinStudentCourseData();
+        List<StudentCourseDto>list2=studentRepo.getFullJoinCourseStudentData();
+
+        Set<StudentCourseDto> merged=new LinkedHashSet<>();
+        merged.addAll(list1);
+        merged.addAll(list2);
+
+        return new ArrayList<>(merged);
     }
 
     @GetMapping("/multipleJoin")
@@ -47,13 +57,23 @@ public class StudentController {
     }
 
     @GetMapping("/studentWithCourseTeacherDepartment")
-    public List<StudentCourseDepartmentTeacherDto> findStudentWithCourseTeacherDepartment(){
-        return studentRepo.getStudentCourseDepartmentTeacherData();
+    public List<StudentCourseDepartmentTeacherDto> findStudentWithCourseTeacherDepartment(@RequestParam String query){
+        return studentRepo.searchStudentDetails(query);
     }
 
     @GetMapping("/studentCourseGreaterThanTwo")
     public List<StudentDto> findStudentCourseGreaterThanTwo(){
         return studentRepo.getStudentWithCourseGreaterThanTwo();
+    }
+
+    @GetMapping("/studentByCourseAndTeacher")
+    public List<StudentByDepartmentTeacher> findStudentByDepartmentAndTeacher(@RequestParam("departmentId") List<Long> departmentId, @RequestParam("teacherId") List<Long> teacherId){
+        return studentRepo.getStudentByDepartmentAndTeacher(departmentId,teacherId);
+    }
+
+    @GetMapping("/studentByCourseAndDepartmentName")
+    public List<StudentByCourseAndDepartmentName> findStudentByCourseAndDepartmentName(@RequestParam List<String> courseName,@RequestParam List<String> departmentName){
+        return studentRepo.getStudentByCourseAndDepartmentName(courseName,departmentName);
     }
 
 

@@ -1,7 +1,7 @@
 package com.example.sqlQuery.controller;
 
-import com.example.sqlQuery.dto.DepartmentStudentTeacherDto;
 import com.example.sqlQuery.dto.DepartmentTeacherDto;
+import com.example.sqlQuery.dto.StudentDepartmentDto;
 import com.example.sqlQuery.entity.Department;
 import com.example.sqlQuery.repository.DepartmentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class DepartmentController {
         return departmentRepo.getAllTeacherFromDepartment();
     }
     @GetMapping("/departmentWithStudentEntrolledCourse")
-    public List<DepartmentStudentTeacherDto> findDepartmentWithStudentEntrolledCourse(){
+    public List<StudentDepartmentDto> findDepartmentWithStudentEntrolledCourse(){
         return departmentRepo.getGetDepartmentStudentEntrolledCourse();
     }
 

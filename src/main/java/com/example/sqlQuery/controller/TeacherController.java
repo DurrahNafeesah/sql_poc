@@ -1,9 +1,11 @@
 package com.example.sqlQuery.controller;
 
+import com.example.sqlQuery.dto.TeacherByCourseDepartmentStudent;
 import com.example.sqlQuery.dto.TeacherDepartmentCourseDto;
 import com.example.sqlQuery.entity.Teacher;
 import com.example.sqlQuery.repository.TeacherRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,5 +23,9 @@ public class TeacherController {
     @GetMapping("/teacherDepartmentCourse")
     public List<TeacherDepartmentCourseDto> findTeacherDepartmentCourse() {
         return teacherRepo.findTeacherDepartmentCourse();
+    }
+    @GetMapping("/searchTeachersByQuery")
+    public List<TeacherByCourseDepartmentStudent> searchTeachersByQuery(@Param("queryString") String queryString) {
+        return teacherRepo.searchTeachersByQuery(queryString);
     }
 }

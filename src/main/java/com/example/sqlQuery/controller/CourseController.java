@@ -1,6 +1,7 @@
 package com.example.sqlQuery.controller;
 
 import com.example.sqlQuery.dto.CourseDto;
+import com.example.sqlQuery.dto.CourseStudentDto;
 import com.example.sqlQuery.dto.CourseTeacherDto;
 import com.example.sqlQuery.entity.Course;
 import com.example.sqlQuery.repository.CourseRepo;
@@ -27,5 +28,14 @@ public class CourseController {
     @GetMapping("/courseWithTeacherWithoutStudent")
     public List<CourseTeacherDto> findCourseWithTeacherWithoutStudent() {
         return courseRepo.getCourseWithTeacherWithoutStudent();
+    }
+
+    @GetMapping("/GetCourseAndStudentFilteringByDepartment")
+    public List<CourseStudentDto> findCourseAndStudentFilteringByDepartment(@RequestParam String departmentName) {
+        return courseRepo.getCourseStudentByDepartmentName(departmentName);
+    }
+    @GetMapping("/GetStudentWithCourseGreaterThan2")
+    public List<CourseStudentDto> findCourseStudentWithCourseGreaterThan2() {
+        return courseRepo.getStudentByCourseGreaterThanTwo();
     }
 }
